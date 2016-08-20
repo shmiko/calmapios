@@ -308,7 +308,14 @@
       marker.addListener('mouseout', function() {
         this.setIcon(defaultIcon);
       });
-    } 
+    }
+
+    //Resize Function
+    google.maps.event.addDomListener(window, "resize", function() {
+      var center = map.getCenter();
+      google.maps.event.trigger(map, "resize");
+      map.setCenter(center);
+    }); 
   }
 
 
@@ -444,10 +451,14 @@
             map.setZoom(15);
           } else {
             window.alert('We could not find that location - try entering a more' +
-                ' specifi c place.');
+                ' specific place.');
           }
         });
     }
   }
+
+  google.maps.event.addDomListener(window, 'load', initMap);
+
+
 
 // }())
