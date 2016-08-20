@@ -99,11 +99,54 @@
     sidebarUI.appendChild(sidebarText);
 
     // Setup the click event listeners: simply set the map to Chicago.
-    //sidebarUI.addEventListener('click', function() {
+    sidebarUI.addEventListener('click', function() {
+      document.getElementById('show-listings').addEventListener('click', showListings);
+      document.getElementById('hide-listings').addEventListener('click', hideListings);
+
+      
+      document.getElementById('toggle-drawing').addEventListener('click', function() {
+        toggleDrawing(drawingManager);
+      });
       //map.setCenter(chicago);
-      // openNav();
+      // Initialize the drawing manager.
+      var drawingManager = new google.maps.drawing.DrawingManager({
+        drawingMode: google.maps.drawing.OverlayType.POLYGON,
+        drawingControl: true,
+        drawingControlOptions: {
+          position: google.maps.ControlPosition.TOP_LEFT,
+          drawingModes: [
+            google.maps.drawing.OverlayType.POLYGON
+          ]
+        }
+      });
+
+      // Add an event listener so that the polygon is captured,  call the
+      // searchWithinPolygon function. This will show the markers in the polygon,
+      // and hide any outside of it.
+      drawingManager.addListener('overlaycomplete', function(event) {
+        // First, check if there is an existing polygon.
+        // If there is, get rid of it and remove the markers
+        if (polygon) {
+          polygon.setMap(null);
+          hideListings(markers);
+        }
+        // Switching the drawing mode to the HAND (i.e., no longer drawing).
+        drawingManager.setDrawingMode(null);
+        // Creating a new editable polygon from the overlay.
+        polygon = event.overlay;
+        polygon.setEditable(true);
+        // Searching within the polygon.
+        searchWithinPolygon();
+        
+        //alert(z);
+        // Make sure the search is re-done if the poly is changed.
+        polygon.getPath().addListener('set_at', searchWithinPolygon);
+        polygon.getPath().addListener('insert_at', searchWithinPolygon);
+      });
+
+      
       // document.getElementsByClassName('options-box')[0].classList.toggle('collapsed')
-    //});
+    });
 
   }
 
@@ -176,17 +219,7 @@
 
     var largeInfowindow = new google.maps.InfoWindow();
 
-    // Initialize the drawing manager.
-    var drawingManager = new google.maps.drawing.DrawingManager({
-      drawingMode: google.maps.drawing.OverlayType.POLYGON,
-      drawingControl: true,
-      drawingControlOptions: {
-        position: google.maps.ControlPosition.TOP_LEFT,
-        drawingModes: [
-          google.maps.drawing.OverlayType.POLYGON
-        ]
-      }
-    });
+    
 
     // The following group uses the location array to create an array of markers on initialize.
     for (var i = 0; i < locations.length; i++) {
@@ -225,37 +258,9 @@
       });
     }
    
-    document.getElementById('show-listings').addEventListener('click', showListings);
-    document.getElementById('hide-listings').addEventListener('click', hideListings);
-
     
-    document.getElementById('toggle-drawing').addEventListener('click', function() {
-      toggleDrawing(drawingManager);
-    });
     
-    // Add an event listener so that the polygon is captured,  call the
-    // searchWithinPolygon function. This will show the markers in the polygon,
-    // and hide any outside of it.
-    drawingManager.addListener('overlaycomplete', function(event) {
-      // First, check if there is an existing polygon.
-      // If there is, get rid of it and remove the markers
-      if (polygon) {
-        polygon.setMap(null);
-        hideListings(markers);
-      }
-      // Switching the drawing mode to the HAND (i.e., no longer drawing).
-      drawingManager.setDrawingMode(null);
-      // Creating a new editable polygon from the overlay.
-      polygon = event.overlay;
-      polygon.setEditable(true);
-      // Searching within the polygon.
-      searchWithinPolygon();
-      
-      //alert(z);
-      // Make sure the search is re-done if the poly is changed.
-      polygon.getPath().addListener('set_at', searchWithinPolygon);
-      polygon.getPath().addListener('insert_at', searchWithinPolygon);
-    });
+    
   }
 
   // This function populates the infowindow when the marker is clicked. We'll only allow
