@@ -42,7 +42,7 @@ html,
         z-index: 200;
       }
       .options-box.collapsed {
-        max-width: 0px;
+        max-width: -10px;
         /*margin-right: -200px;*/
         overflow: hidden;
       }
