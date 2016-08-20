@@ -28,6 +28,7 @@ html,
         left: 362px;
         position: absolute;
         right: 0px;
+        z-index: 35;
       }
       .options-box {
         background: #fff;
@@ -38,8 +39,13 @@ html,
         padding: 10px 10px 30px 10px;
         text-align: left;
         width: 340px;
+        z-index: 200;
       }
-
+      .options-box.collapsed {
+        max-width: 0px;
+        /*margin-right: -200px;*/
+        overflow: hidden;
+      }
       #pano{
         width: 200px;
         height: 200px;
