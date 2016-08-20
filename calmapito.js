@@ -209,7 +209,7 @@
     var sidebarControlDiv = document.createElement('div');
     var leftmiddleControl = new SidebarControl(sidebarControlDiv, map);
     sidebarControlDiv.index = 1;
-    map.controls[google.maps.ControlPosition.LEFT_CENTER].push(sidebarControlDiv);
+    map.controls[google.maps.ControlPosition.RIGHT_CENTER].push(sidebarControlDiv);
 
 
     // var opera_house = {lat: -33.856159, lng: 151.215256};
@@ -457,8 +457,8 @@
     }
   }
 
-  google.maps.event.addDomListener(window, 'load', initMap);
-
+  // google.maps.event.addDomListener(window, 'load', initMap);
+  var sidebar = $('#sidebar').sidebar();
 
 
 // }())
