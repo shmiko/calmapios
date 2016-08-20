@@ -42,9 +42,10 @@ html,
         z-index: 200;
       }
       .options-box.collapsed {
-        max-width: -10px;
-        /*margin-right: -200px;*/
+        max-width: 0px;
+        margin-right: -200px;
         overflow: hidden;
+        width: 0px;
       }
       #pano{
         width: 200px;
