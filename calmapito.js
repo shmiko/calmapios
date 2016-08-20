@@ -6,7 +6,8 @@
 
 	var map;
 	var markers = [];
-
+  var sidebar = $('.options-box');
+    
   //global polgon variable is to ensure only one polygon is rendered
   var polygon = null;
 
@@ -55,7 +56,8 @@
     controlUI.addEventListener('click', function() {
       //map.setCenter(chicago);
       // openNav();
-      document.getElementsByClassName('options-box')[0].classList.toggle('collapsed')
+      document.getElementsByClassName('options-box')[0].classList.toggle('collapsed');
+
     });
 
   }
@@ -97,28 +99,53 @@
     '<input id="area" placeholder="Search Area is?" ><span> meters squared!</span>' +
     '</div>';
     sidebarUI.appendChild(sidebarText);
+    var sidebar = $('.options-box');
 
     // Setup the click event listeners: simply set the map to Chicago.
     sidebarUI.addEventListener('click', function() {
       document.getElementById('show-listings').addEventListener('click', showListings);
       document.getElementById('hide-listings').addEventListener('click', hideListings);
-
-      
       document.getElementById('toggle-drawing').addEventListener('click', function() {
         toggleDrawing(drawingManager);
       });
+     });  
+
+      // drawingManager.setMap(map);
+      // document.getElementById('toggle-drawing').addEventListener('click', function() {
+      //   toggleDrawing(drawingManager);
+      // });
       //map.setCenter(chicago);
       // Initialize the drawing manager.
+      // var drawingManager = new google.maps.drawing.DrawingManager({
+      //   drawingMode: google.maps.drawing.OverlayType.POLYGON,
+      //   drawingControl: true,
+      //   drawingControlOptions: {
+      //     position: google.maps.ControlPosition.TOP_LEFT,
+      //     drawingModes: [
+      //       google.maps.drawing.OverlayType.POLYGON
+      //     ]
+      //   }
+      // });
+
       var drawingManager = new google.maps.drawing.DrawingManager({
-        drawingMode: google.maps.drawing.OverlayType.POLYGON,
+        drawingMode: google.maps.drawing.OverlayType.MARKER,
         drawingControl: true,
         drawingControlOptions: {
           position: google.maps.ControlPosition.TOP_LEFT,
-          drawingModes: [
-            google.maps.drawing.OverlayType.POLYGON
-          ]
+          drawingModes: [ 'polygon']
+        },
+        // markerOptions: {icon: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'},
+        circleOptions: {
+          fillColor: '#ffff00',
+          fillOpacity: 1,
+          strokeWeight: 5,
+          clickable: false,
+          editable: true,
+          zIndex: 1
         }
       });
+      drawingManager.setMap(map);
+
 
       // Add an event listener so that the polygon is captured,  call the
       // searchWithinPolygon function. This will show the markers in the polygon,
@@ -132,6 +159,7 @@
         }
         // Switching the drawing mode to the HAND (i.e., no longer drawing).
         drawingManager.setDrawingMode(null);
+        // drawingManager.setMap(null);
         // Creating a new editable polygon from the overlay.
         polygon = event.overlay;
         polygon.setEditable(true);
@@ -143,10 +171,12 @@
         polygon.getPath().addListener('set_at', searchWithinPolygon);
         polygon.getPath().addListener('insert_at', searchWithinPolygon);
       });
-
-      
+      // drawingManager.setMap(map);
+      // drawingManager.setOptions({
+      //   drawingControl: true
+      // });
       // document.getElementsByClassName('options-box')[0].classList.toggle('collapsed')
-    });
+   
 
   }
 
@@ -219,6 +249,7 @@
 
     var largeInfowindow = new google.maps.InfoWindow();
 
+
     
 
     // The following group uses the location array to create an array of markers on initialize.
@@ -243,6 +274,18 @@
 		  };
       // Push the marker to our array of markers.
       markers.push(marker);
+      var sidebar_entry = $('<li/>', {
+        'html': name,
+        'click': function() {
+          google.maps.event.trigger(marker, 'click');
+        },
+        'mouseenter': function() {
+          $(this).css('color', 'red');
+        },
+        'mouseleave': function() {
+          $(this).css('color', '#999999');
+        }
+      }).appendTo(sidebar);
       // Create an onclick event to open an infowindow at each marker.
       marker.addListener('click', function() {
         populateInfoWindow(this, largeInfowindow);
@@ -256,12 +299,9 @@
       marker.addListener('mouseout', function() {
         this.setIcon(defaultIcon);
       });
-    }
-   
-    
-    
-    
+    } 
   }
+
 
   // This function populates the infowindow when the marker is clicked. We'll only allow
   // one infowindow which will open at the marker that is clicked, and populate based
@@ -342,6 +382,7 @@
   }
 
   
+  // This shows and hides (respectively) the drawing options.
   // This shows and hides (respectively) the drawing options.
   function toggleDrawing(drawingManager) {
     if (drawingManager.map) {
