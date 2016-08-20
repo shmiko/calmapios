@@ -93,7 +93,7 @@
     '<input id="hide-listings" type="button" value="Hide Listings">' +
     '<hr>' +
     '<span class="text"> Draw a shape to search within it for tourist areas!</span>' +
-    '<input id="toggle-drawing"  type="button" value="Drawing Tools">' + 
+    '<input id="toggle-drawing"  type="button" value="Clear Drawing Tools">' + 
     '<hr>' +
     '<span class="area"> You are searching within this sized area!</span>' +
     '<input id="area" placeholder="Search Area is?" ><span> meters squared!</span>' +
