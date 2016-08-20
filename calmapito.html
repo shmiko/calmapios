@@ -1,27 +1,15 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<title>Calmapito</title>
-	<link rel="stylesheet" type="text/css" href="calmapito.css">
-</head>
-<body>
-	<div class="container">
-   <!--    <div id="mySidenav" class="sidenav">
-        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+  <head>
+  	<title>Calmapito</title>
+  	<link rel="stylesheet" type="text/css" href="calmapito.css">
+  </head>
+  <body>
+  	<div class="container">
+     <!-- <div class="options-box">
         <h1>Find Sydney Tourist Hotspots</h1>
         <div>
-          <input id="show-listings" type="button" value="Show Listings">
-          <input id="hide-listings" type="button" value="Hide Listings">
-          <hr>
-          <span class="text"> Draw a shape to search within it for tourist areas!</span>
-          <input id="toggle-drawing"  type="button" value="Drawing Tools">
-          <hr>
-          <span class="area"> You are searching within this sized area!</span>
-          <input id="area" placeholder="Search Area is?" ><span> meters squared!</span>
-      </div> -->
-      <div class="options-box">
-        <h1>Find Sydney Tourist Hotspots</h1>
-        <div>
+          <button onclick="document.getElementsByClassName('options-box')[0].classList.toggle('collapsed')">X</button>
           <input id="show-listings" type="button" value="Show Listings">
           <input id="hide-listings" type="button" value="Hide Listings">
           <hr>
@@ -31,15 +19,11 @@
           <span class="area"> You are searching within this sized area!</span>
           <input id="area" placeholder="Search Area is?" ><span> meters squared!</span>
         </div>
-      </div>
-      <div id="map">
-        <!-- <button onclick="document.getElementsByClassName('sidenav')[0].classList.toggle('collapsed')">X</button>    -->
-      </div>
+      </div> -->
+      <div id="map"></div>
     </div>
-    
+      
     <script src="calmapito.js" type="text/javascript"></script>
-    <script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBvLNxZkZ9Nn69-QSghPArPGgvHcrYDoS0&libraries=geometry,drawing&v=3&callback=initMap">
-    </script>
-</body>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBvLNxZkZ9Nn69-QSghPArPGgvHcrYDoS0&libraries=geometry,drawing&v=3&callback=initMap"></script>
+  </body>
 </html>

@@ -48,7 +48,7 @@
     controlText.style.lineHeight = '38px';
     controlText.style.paddingLeft = '5px';
     controlText.style.paddingRight = '5px';
-    controlText.innerHTML = 'Center Map';
+    controlText.innerHTML = 'Toggle Sidebar';
     controlUI.appendChild(controlText);
 
     // Setup the click event listeners: simply set the map to Chicago.
@@ -60,15 +60,53 @@
 
   }
 
-  function openNav() {
-    document.getElementById("mySidenav").style.width = "250px";
-    //document.getElementById("map").style.left = "250px";
+  function SidebarControl(sidebarDiv, map) {
+
+    // Set CSS for the control border.
+    var sidebarUI = document.createElement('div');
+    sidebarUI.className = 'options-box';
+    sidebarUI.style.backgroundColor = '#fff';
+    sidebarUI.style.border = '2px solid #fff';
+    sidebarUI.style.borderRadius = '3px';
+    sidebarUI.style.boxShadow = '0 2px 6px rgba(0,0,0,.3)';
+    sidebarUI.style.cursor = 'pointer';
+    sidebarUI.style.marginBottom = '22px';
+    sidebarUI.style.textAlign = 'center';
+    sidebarUI.title = 'Find Sydney Tourist Hotspots';
+    sidebarDiv.appendChild(sidebarUI);
+
+    // Set CSS for the control interior.
+    var sidebarText = document.createElement('div');
+    sidebarText.style.color = 'rgb(25,25,25)';
+    sidebarText.style.fontFamily = 'Roboto,Arial,sans-serif';
+    sidebarText.style.fontSize = '16px';
+    sidebarText.style.lineHeight = '38px';
+    sidebarText.style.paddingLeft = '5px';
+    sidebarText.style.paddingRight = '5px';
+    sidebarText.innerHTML = 'Tourist Hotspots' +
+    '<p>' +
+    '<div>' +
+    // '<button onclick="document.getElementsByClassName('options-box')[0].classList.toggle('collapsed')">X</button>' +
+    '<input id="show-listings" type="button" value="Show Listings">' +
+    '<input id="hide-listings" type="button" value="Hide Listings">' +
+    '<hr>' +
+    '<span class="text"> Draw a shape to search within it for tourist areas!</span>' +
+    '<input id="toggle-drawing"  type="button" value="Drawing Tools">' + 
+    '<hr>' +
+    '<span class="area"> You are searching within this sized area!</span>' +
+    '<input id="area" placeholder="Search Area is?" ><span> meters squared!</span>' +
+    '</div>';
+    sidebarUI.appendChild(sidebarText);
+
+    // Setup the click event listeners: simply set the map to Chicago.
+    //sidebarUI.addEventListener('click', function() {
+      //map.setCenter(chicago);
+      // openNav();
+      // document.getElementsByClassName('options-box')[0].classList.toggle('collapsed')
+    //});
+
   }
 
-  function closeNav() {
-    document.getElementById("mySidenav").style.width = "0";
-    //document.getElementById("map").style.left= "0";
-  }
   function initMap() {
     // Constructor creates a new map - only center and zoom are required.
     map = new google.maps.Map(document.getElementById('map'), {
@@ -82,9 +120,16 @@
     // constructor passing in this DIV.
     var centerControlDiv = document.createElement('div');
     var centerControl = new CenterControl(centerControlDiv, map);
-
     centerControlDiv.index = 1;
     map.controls[google.maps.ControlPosition.TOP_CENTER].push(centerControlDiv);
+
+    //contruct the side bar controls
+    var sidebarControlDiv = document.createElement('div');
+    var leftmiddleControl = new SidebarControl(sidebarControlDiv, map);
+    sidebarControlDiv.index = 1;
+    map.controls[google.maps.ControlPosition.LEFT_CENTER].push(sidebarControlDiv);
+
+
     // var opera_house = {lat: -33.856159, lng: 151.215256};
     // var oldMarker = new google.maps.Marker({
     //   position: opera_house,
