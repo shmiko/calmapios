@@ -57,7 +57,7 @@ html,
       }
 
       #toggle-drawing{
-        width: 27%;
+        width: 160px;
         position: relative;
         margin-left: 10px;
       }
@@ -67,4 +67,10 @@ html,
         height: 20px;
       }
 
-
+      #zoom-to-area-text {
+        position: relative;
+        width: 70%;
+      }
+      #zoom-to-area {
+        width: 24%;
+      }
