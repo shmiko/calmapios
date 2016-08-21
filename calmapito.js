@@ -729,9 +729,7 @@
         });
       }
     });
-  }
-  // google.maps.event.addDomListener(window, 'load', initMap);
-  //var sidebar = $('#sidebar').sidebar();
+  ]
 
 
 // }())
