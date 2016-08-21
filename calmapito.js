@@ -87,38 +87,38 @@
     sidebarText.style.lineHeight = '38px';
     sidebarText.style.paddingLeft = '5px';
     sidebarText.style.paddingRight = '5px';
-    sidebarText.innerHTML = 'Tourist Hotspots' +
-    '<p>' +
-    '<div>' +
-    '<button onclick="closeNav()">X</button>' +
-    '<input id="show-listings" type="button" value="Show Listings">' +
-    '<input id="hide-listings" type="button" value="Hide Listings">' +
-    '<hr>' +
-    '<span class="text"> Draw a shape to search within it for tourist areas!</span>' +
-    '<input id="toggle-drawing"  type="button" value="Clear Drawing Tools">' +
-    '<hr>' +
-    '<span class="area"> You are searching within this sized area!</span>' +
-    '<input id="area" placeholder="Search Area is?" ><span> meters squared!</span>' +
-    '</div>' +
-    '<hr>' +
-    '<div>' +
-    '<input id="zoom-to-area-text" type="text" placeholder="Enter your favorite area!">' +
-    '<input id="zoom-to-area" type="button" value="Zoom">' +
-    '</div>' +
-    '</div>';
+    sidebarText.innerHTML = 'Tourist Hotspots';// +
+    // '<p>' +
+    // '<div>' +
+    // '<button onclick="closeNav()">X</button>' +
+    // '<input id="show-listings" type="button" value="Show Listings">' +
+    // '<input id="hide-listings" type="button" value="Hide Listings">' +
+    // '<hr>' +
+    // '<span class="text"> Draw a shape to search within it for tourist areas!</span>' +
+    // '<input id="toggle-drawing"  type="button" value="Clear Drawing Tools">' +
+    // '<hr>' +
+    // '<span class="area"> You are searching within this sized area!</span>' +
+    // '<input id="area" placeholder="Search Area is?" ><span> meters squared!</span>' +
+    // '</div>' +
+    // '<hr>' +
+    // '<div>' +
+    // '<input id="zoom-to-area-text" type="text" placeholder="Enter your favorite area!">' +
+    // '<input id="zoom-to-area" type="button" value="Zoom">' +
+    // '</div>' +
+    // '</div>';
     sidebarUI.appendChild(sidebarText);
     var sidebar = $('.options-box');
 
     // Setup the click event listeners: simply set the map to Chicago.
     sidebarUI.addEventListener('click', function() {
-      document.getElementById('show-listings').addEventListener('click', showListings);
-      document.getElementById('hide-listings').addEventListener('click', hideListings);
-      document.getElementById('toggle-drawing').addEventListener('click', function() {
-        toggleDrawing(drawingManager);
-      });
-      document.getElementById('zoom-to-area').addEventListener('click', function() {
-        zoomToArea();
-      });
+      // document.getElementById('show-listings').addEventListener('click', showListings);
+      // document.getElementById('hide-listings').addEventListener('click', hideListings);
+      // document.getElementById('toggle-drawing').addEventListener('click', function() {
+      //   toggleDrawing(drawingManager);
+      // });
+      // document.getElementById('zoom-to-area').addEventListener('click', function() {
+      //   zoomToArea();
+      // });
      });
 
       // drawingManager.setMap(map);
@@ -138,50 +138,50 @@
       //   }
       // });
 
-      var drawingManager = new google.maps.drawing.DrawingManager({
-        drawingMode: google.maps.drawing.OverlayType.MARKER,
-        drawingControl: true,
-        drawingControlOptions: {
-          position: google.maps.ControlPosition.TOP_LEFT,
-          drawingModes: [ 'polygon']
-        },
-        // markerOptions: {icon: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'},
-        circleOptions: {
-          fillColor: '#ffff00',
-          fillOpacity: 1,
-          strokeWeight: 5,
-          clickable: false,
-          editable: true,
-          zIndex: 1
-        }
-      });
-      drawingManager.setMap(map);
+      // var drawingManager = new google.maps.drawing.DrawingManager({
+      //   drawingMode: google.maps.drawing.OverlayType.MARKER,
+      //   drawingControl: true,
+      //   drawingControlOptions: {
+      //     position: google.maps.ControlPosition.TOP_RIGHT,
+      //     drawingModes: [ 'polygon']
+      //   },
+      //   // markerOptions: {icon: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'},
+      //   circleOptions: {
+      //     fillColor: '#ffff00',
+      //     fillOpacity: 1,
+      //     strokeWeight: 5,
+      //     clickable: false,
+      //     editable: true,
+      //     zIndex: 1
+      //   }
+      // });
+      // drawingManager.setMap(map);
 
 
-      // Add an event listener so that the polygon is captured,  call the
-      // searchWithinPolygon function. This will show the markers in the polygon,
-      // and hide any outside of it.
-      drawingManager.addListener('overlaycomplete', function(event) {
-        // First, check if there is an existing polygon.
-        // If there is, get rid of it and remove the markers
-        if (polygon) {
-          polygon.setMap(null);
-          hideListings(markers);
-        }
-        // Switching the drawing mode to the HAND (i.e., no longer drawing).
-        drawingManager.setDrawingMode(null);
-        // drawingManager.setMap(null);
-        // Creating a new editable polygon from the overlay.
-        polygon = event.overlay;
-        polygon.setEditable(true);
-        // Searching within the polygon.
-        searchWithinPolygon();
-
-        //alert(z);
-        // Make sure the search is re-done if the poly is changed.
-        polygon.getPath().addListener('set_at', searchWithinPolygon);
-        polygon.getPath().addListener('insert_at', searchWithinPolygon);
-      });
+      // // Add an event listener so that the polygon is captured,  call the
+      // // searchWithinPolygon function. This will show the markers in the polygon,
+      // // and hide any outside of it.
+      // drawingManager.addListener('overlaycomplete', function(event) {
+      //   // First, check if there is an existing polygon.
+      //   // If there is, get rid of it and remove the markers
+      //   if (polygon) {
+      //     polygon.setMap(null);
+      //     hideListings(markers);
+      //   }
+      //   // Switching the drawing mode to the HAND (i.e., no longer drawing).
+      //   drawingManager.setDrawingMode(null);
+      //   // drawingManager.setMap(null);
+      //   // Creating a new editable polygon from the overlay.
+      //   polygon = event.overlay;
+      //   polygon.setEditable(true);
+      //   // Searching within the polygon.
+      //   searchWithinPolygon();
+      //
+      //   //alert(z);
+      //   // Make sure the search is re-done if the poly is changed.
+      //   polygon.getPath().addListener('set_at', searchWithinPolygon);
+      //   polygon.getPath().addListener('insert_at', searchWithinPolygon);
+      // });
       // drawingManager.setMap(map);
       // drawingManager.setOptions({
       //   drawingControl: true
@@ -261,7 +261,17 @@
     var largeInfowindow = new google.maps.InfoWindow();
 
 
-
+    // Initialize the drawing manager.
+    var drawingManager = new google.maps.drawing.DrawingManager({
+      drawingMode: google.maps.drawing.OverlayType.POLYGON,
+      drawingControl: true,
+      drawingControlOptions: {
+        position: google.maps.ControlPosition.TOP_RIGHT,
+        drawingModes: [
+          google.maps.drawing.OverlayType.POLYGON
+        ]
+      }
+    });
 
     // The following group uses the location array to create an array of markers on initialize.
     for (var i = 0; i < locations.length; i++) {
@@ -285,18 +295,7 @@
       };
       // Push the marker to our array of markers.
       markers.push(marker);
-      var sidebar_entry = $('<li/>', {
-        'html': name,
-        'click': function() {
-          google.maps.event.trigger(marker, 'click');
-        },
-        'mouseenter': function() {
-          $(this).css('color', 'red');
-        },
-        'mouseleave': function() {
-          $(this).css('color', '#999999');
-        }
-      }).appendTo(sidebar);
+
       // Create an onclick event to open an infowindow at each marker.
       marker.addListener('click', function() {
         populateInfoWindow(this, largeInfowindow);
@@ -312,13 +311,91 @@
       });
     }
 
+    document.getElementById('show-listings').addEventListener('click', showListings);
+    document.getElementById('hide-listings').addEventListener('click', hideListings);
+
+
+    document.getElementById('toggle-drawing').addEventListener('click', function() {
+      toggleDrawing(drawingManager);
+    });
+
+    // Add an event listener so that the polygon is captured,  call the
+   // searchWithinPolygon function. This will show the markers in the polygon,
+   // and hide any outside of it.
+   drawingManager.addListener('overlaycomplete', function(event) {
+     // First, check if there is an existing polygon.
+     // If there is, get rid of it and remove the markers
+     if (polygon) {
+       polygon.setMap(null);
+       hideListings(markers);
+     }
+     // Switching the drawing mode to the HAND (i.e., no longer drawing).
+     drawingManager.setDrawingMode(null);
+     // Creating a new editable polygon from the overlay.
+     polygon = event.overlay;
+     polygon.setEditable(true);
+     // Searching within the polygon.
+     searchWithinPolygon();
+
+     //alert(z);
+     // Make sure the search is re-done if the poly is changed.
+     polygon.getPath().addListener('set_at', searchWithinPolygon);
+     polygon.getPath().addListener('insert_at', searchWithinPolygon);
+   });
+
+
+    // var drawingManager = new google.maps.drawing.DrawingManager({
+    //     drawingMode: google.maps.drawing.OverlayType.MARKER,
+    //     drawingControl: true,
+    //     drawingControlOptions: {
+    //       position: google.maps.ControlPosition.TOP_RIGHT,
+    //       drawingModes: [ 'polygon']
+    //     },
+    //     // markerOptions: {icon: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'},
+    //     circleOptions: {
+    //       fillColor: '#ffff00',
+    //       fillOpacity: 1,
+    //       strokeWeight: 5,
+    //       clickable: false,
+    //       editable: true,
+    //       zIndex: 1
+    //     }
+    //   });
+    //   drawingManager.setMap(map);
+
+
+      // // Add an event listener so that the polygon is captured,  call the
+      // // searchWithinPolygon function. This will show the markers in the polygon,
+      // // and hide any outside of it.
+      // drawingManager.addListener('overlaycomplete', function(event) {
+      //   // First, check if there is an existing polygon.
+      //   // If there is, get rid of it and remove the markers
+      //   if (polygon) {
+      //     polygon.setMap(null);
+      //     hideListings(markers);
+      //   }
+      //   // Switching the drawing mode to the HAND (i.e., no longer drawing).
+      //   drawingManager.setDrawingMode(null);
+      //   // drawingManager.setMap(null);
+      //   // Creating a new editable polygon from the overlay.
+      //   polygon = event.overlay;
+      //   polygon.setEditable(true);
+      //   // Searching within the polygon.
+      //   searchWithinPolygon();
+      //
+      //   //alert(z);
+      //   // Make sure the search is re-done if the poly is changed.
+      //   polygon.getPath().addListener('set_at', searchWithinPolygon);
+      //   polygon.getPath().addListener('insert_at', searchWithinPolygon);
+      // });
+
     //Resize Function
     google.maps.event.addDomListener(window, "resize", function() {
       var center = map.getCenter();
       google.maps.event.trigger(map, "resize");
       map.setCenter(center);
     });
-  }
+  }//end init
 
 
   // This function populates the infowindow when the marker is clicked. We'll only allow
@@ -463,7 +540,7 @@
     var cn = document.getElementById("mySidenav");
     //test for existance
     if( cn.classList.contains("collapsed") ) {
-      cn.style.width = "250px";
+      cn.style.width = "350px";
       document.getElementsByClassName('sidenav')[0].classList.toggle('collapsed');
     } else {
       cn.style.width = "0";
