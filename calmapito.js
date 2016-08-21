@@ -62,7 +62,7 @@
       //map.setCenter(chicago);
       // openNav();
       toggleSideNav();
-      document.getElementsByClassName('options-box')[0].classList.toggle('collapsed');
+      // document.getElementsByClassName('mySidenavRight').classList.toggle('collapsed');
 
     });
 
@@ -500,7 +500,7 @@
     if ( address == ''){
       window.alert('You must enter an address');
     } else {
-      hideListings();
+      hideMarkers(markers);
       // Use the distance matrix service to calculate the duration of the routes
       // between all the markers, and the destination address entered
       // by the user. Then put all the origins into an origin matrix
@@ -582,7 +582,7 @@
   // of the markers within the calculated distance. This will display the route
   // on the map.
   function displayDirections(origin) {
-    hideListings();
+    hideMarkers(markers);
     var directionsService = new google.maps.DirectionsService;
     // Get the destination address from the user entered value.
     var destinationAddress =
@@ -661,11 +661,18 @@
         icon: icon,
         title: place.name,
         position: place.geometry.location,
-        id: place.id
+        id: place.place_id
       });
+      // Create a single infowindow to be used with the place details information
+      // so that only one is open at once.
+      var placeInfoWindow = new google.maps.InfoWindow();
       // If a marker is clicked, do a place details search on it in the next function.
       marker.addListener('click', function() {
-      getPlacesDetails(this, place);
+        if (placeInfoWindow.marker == this) {
+          console.log("This infowindow already is on this marker!");
+        } else {
+          getPlacesDetails(this, placeInfoWindow);
+        }
       });
       placeMarkers.push(marker);
       if (place.geometry.viewport) {
