@@ -145,6 +145,23 @@
     sidebarControlDiv.index = 1;
     map.controls[google.maps.ControlPosition.RIGHT_CENTER].push(sidebarControlDiv);
 
+    // this autocomplete is for use in the search within time entry box
+    var timeAutocomplete = new google.maps.places.Autocomplete(
+      document.getElementById('search-within-time-text'));
+
+    // this autocomplete is for the geocoder entry box
+    var zoomAutocomplete = new google.maps.places.Autocomplete(
+      document.getElementById('zoom-to-area-text'));
+    
+    //Bias the boundaries within the map for the zoom to area text
+    zoomAutocomplete.bindTo('bounds',map);
+
+    // Create a searchbox in order to execute a places search
+    var searchBox = new google.maps.places.SearchBox(
+      document.getElementById('places-search'));
+    // Bias the searchbox to within the bounds of the map
+    searchBox.setBounds(map.getBounds());
+
     //locations array - usually these would be served up via a database
     var locations = [
       {title: 'Sydney Opera House', location: {lat: -33.856159, lng: 151.215256},image: 'beachflag.png'},
@@ -248,6 +265,16 @@
     document.getElementById('search-within-time').addEventListener('click', function() {
       searchWithinTime();
     });
+
+    //Listen for the event fired when the user selects the prediction form the 
+    // picklist and tetrieve more details for that place
+    searchBox.addListener('places_changed', function(){
+      searchBoxPlaces(this);
+    });
+
+    //Listen for the event fired when the user selects a prediction and clicks
+    // "go" more detils for that place
+    document.getElementById('go-places').addEventListener('click', textSearchPlaces);
 
    // Add an event listener so that the polygon is captured,  call the
    // searchWithinPolygon function. This will show the markers in the polygon,
@@ -558,12 +585,7 @@
         document.getElementById('search-within-time-text').value;
     // Get mode again from the user entered value.
     var mode = document.getElementById('mode').value;
-    // directionsService.route(request, function(result, status) {
-		// 	if (status == google.maps.DirectionsStatus.OK) {
-		// 	  directionsDisplay.setDirections(result);
-		// 	  directionsDisplay.setPanel(jQuery('#directionSteps')[0]);
-		// 	}
-		//   });
+   
     directionsService.route({
       // The origin is the passed in marker's position.
       origin: origin,
@@ -583,11 +605,6 @@
         });
         directionsDisplay.setMap(map);
         directionsDisplay.setPanel(document.getElementById('mySidenavRight'));
-        // directionsDisplay.setMap(map);
-        // directionsDisplay.setDirections(response);
-        // alert(response);
-        // directionsDisplay.setPanel(document.getElementById('mySidenavRight'));
-        // showSteps(response);
       } else {
         window.alert('Directions request failed due to ' + status);
       }
