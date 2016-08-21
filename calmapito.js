@@ -5,8 +5,9 @@
   var clientID = "1077954538494-n7adn1hemab92p21e2h86rusg9vhhtb7.apps.googleusercontent.com";
 
   var map;
+
+  // blank array for all the markers
   var markers = [];
-  var sidebar = $('.options-box');
 
   //global polgon variable is to ensure only one polygon is rendered
   var polygon = null;
@@ -120,75 +121,6 @@
       //   zoomToArea();
       // });
      });
-
-      // drawingManager.setMap(map);
-      // document.getElementById('toggle-drawing').addEventListener('click', function() {
-      //   toggleDrawing(drawingManager);
-      // });
-      //map.setCenter(chicago);
-      // Initialize the drawing manager.
-      // var drawingManager = new google.maps.drawing.DrawingManager({
-      //   drawingMode: google.maps.drawing.OverlayType.POLYGON,
-      //   drawingControl: true,
-      //   drawingControlOptions: {
-      //     position: google.maps.ControlPosition.TOP_LEFT,
-      //     drawingModes: [
-      //       google.maps.drawing.OverlayType.POLYGON
-      //     ]
-      //   }
-      // });
-
-      // var drawingManager = new google.maps.drawing.DrawingManager({
-      //   drawingMode: google.maps.drawing.OverlayType.MARKER,
-      //   drawingControl: true,
-      //   drawingControlOptions: {
-      //     position: google.maps.ControlPosition.TOP_RIGHT,
-      //     drawingModes: [ 'polygon']
-      //   },
-      //   // markerOptions: {icon: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'},
-      //   circleOptions: {
-      //     fillColor: '#ffff00',
-      //     fillOpacity: 1,
-      //     strokeWeight: 5,
-      //     clickable: false,
-      //     editable: true,
-      //     zIndex: 1
-      //   }
-      // });
-      // drawingManager.setMap(map);
-
-
-      // // Add an event listener so that the polygon is captured,  call the
-      // // searchWithinPolygon function. This will show the markers in the polygon,
-      // // and hide any outside of it.
-      // drawingManager.addListener('overlaycomplete', function(event) {
-      //   // First, check if there is an existing polygon.
-      //   // If there is, get rid of it and remove the markers
-      //   if (polygon) {
-      //     polygon.setMap(null);
-      //     hideListings(markers);
-      //   }
-      //   // Switching the drawing mode to the HAND (i.e., no longer drawing).
-      //   drawingManager.setDrawingMode(null);
-      //   // drawingManager.setMap(null);
-      //   // Creating a new editable polygon from the overlay.
-      //   polygon = event.overlay;
-      //   polygon.setEditable(true);
-      //   // Searching within the polygon.
-      //   searchWithinPolygon();
-      //
-      //   //alert(z);
-      //   // Make sure the search is re-done if the poly is changed.
-      //   polygon.getPath().addListener('set_at', searchWithinPolygon);
-      //   polygon.getPath().addListener('insert_at', searchWithinPolygon);
-      // });
-      // drawingManager.setMap(map);
-      // drawingManager.setOptions({
-      //   drawingControl: true
-      // });
-      // document.getElementsByClassName('options-box')[0].classList.toggle('collapsed')
-
-
   }
 
   function initMap() {
@@ -213,14 +145,6 @@
     sidebarControlDiv.index = 1;
     map.controls[google.maps.ControlPosition.RIGHT_CENTER].push(sidebarControlDiv);
 
-
-    // var opera_house = {lat: -33.856159, lng: 151.215256};
-    // var oldMarker = new google.maps.Marker({
-    //   position: opera_house,
-    //   map: map,
-    //   title: 'Sydney Opera House'
-    // });
-
     //locations array - usually these would be served up via a database
     var locations = [
       {title: 'Sydney Opera House', location: {lat: -33.856159, lng: 151.215256},image: 'beachflag.png'},
@@ -231,7 +155,7 @@
       {title: 'Balmain', location: {lat: -33.8589,lng: 151.1791}, image: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'}
     ];
 
-
+    //default pre defined images
     var image2 = {
       url: 'beachflag.png',
       // This marker is 20 pixels wide by 32 pixels high.
@@ -259,7 +183,6 @@
     var highlightedIcon = makeMarkerIcon('beachflag.png');
 
     var largeInfowindow = new google.maps.InfoWindow();
-
 
     // Initialize the drawing manager.
     var drawingManager = new google.maps.drawing.DrawingManager({
@@ -314,12 +237,19 @@
     document.getElementById('show-listings').addEventListener('click', showListings);
     document.getElementById('hide-listings').addEventListener('click', hideListings);
 
-
     document.getElementById('toggle-drawing').addEventListener('click', function() {
       toggleDrawing(drawingManager);
     });
 
-    // Add an event listener so that the polygon is captured,  call the
+    document.getElementById('zoom-to-area').addEventListener('click', function() {
+      zoomToArea();
+    });
+
+    document.getElementById('search-within-time').addEventListener('click', function() {
+      searchWithinTime();
+    });
+
+   // Add an event listener so that the polygon is captured,  call the
    // searchWithinPolygon function. This will show the markers in the polygon,
    // and hide any outside of it.
    drawingManager.addListener('overlaycomplete', function(event) {
@@ -343,52 +273,6 @@
      polygon.getPath().addListener('insert_at', searchWithinPolygon);
    });
 
-
-    // var drawingManager = new google.maps.drawing.DrawingManager({
-    //     drawingMode: google.maps.drawing.OverlayType.MARKER,
-    //     drawingControl: true,
-    //     drawingControlOptions: {
-    //       position: google.maps.ControlPosition.TOP_RIGHT,
-    //       drawingModes: [ 'polygon']
-    //     },
-    //     // markerOptions: {icon: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'},
-    //     circleOptions: {
-    //       fillColor: '#ffff00',
-    //       fillOpacity: 1,
-    //       strokeWeight: 5,
-    //       clickable: false,
-    //       editable: true,
-    //       zIndex: 1
-    //     }
-    //   });
-    //   drawingManager.setMap(map);
-
-
-      // // Add an event listener so that the polygon is captured,  call the
-      // // searchWithinPolygon function. This will show the markers in the polygon,
-      // // and hide any outside of it.
-      // drawingManager.addListener('overlaycomplete', function(event) {
-      //   // First, check if there is an existing polygon.
-      //   // If there is, get rid of it and remove the markers
-      //   if (polygon) {
-      //     polygon.setMap(null);
-      //     hideListings(markers);
-      //   }
-      //   // Switching the drawing mode to the HAND (i.e., no longer drawing).
-      //   drawingManager.setDrawingMode(null);
-      //   // drawingManager.setMap(null);
-      //   // Creating a new editable polygon from the overlay.
-      //   polygon = event.overlay;
-      //   polygon.setEditable(true);
-      //   // Searching within the polygon.
-      //   searchWithinPolygon();
-      //
-      //   //alert(z);
-      //   // Make sure the search is re-done if the poly is changed.
-      //   polygon.getPath().addListener('set_at', searchWithinPolygon);
-      //   polygon.getPath().addListener('insert_at', searchWithinPolygon);
-      // });
-
     //Resize Function
     google.maps.event.addDomListener(window, "resize", function() {
       var center = map.getCenter();
@@ -396,7 +280,6 @@
       map.setCenter(center);
     });
   }//end init
-
 
   // This function populates the infowindow when the marker is clicked. We'll only allow
   // one infowindow which will open at the marker that is clicked, and populate based
@@ -476,7 +359,6 @@
     return markerImage;
   }
 
-
   // This shows and hides (respectively) the drawing options.
   // This shows and hides (respectively) the drawing options.
   function toggleDrawing(drawingManager) {
@@ -490,6 +372,7 @@
       drawingManager.setMap(map);
     }
   }
+
   // This function hides all markers outside the polygon,
   // and shows only the ones within it. This is so that the
   // user can specify an exact area of search.
@@ -536,6 +419,7 @@
     }
   }
 
+  // togge side nav function
   function toggleSideNav(){
     var cn = document.getElementById("mySidenav");
     //test for existance
@@ -548,20 +432,107 @@
     }
   }
 
+  // open sidenav
   function openNav() {
-        document.getElementById("mySidenav").style.width = "250px";
-        document.getElementById("mySidenav").classList.remove("collapsed");
-        // document.getElementById("map").style.marginLeft = "250px";
-    }
+    document.getElementById("mySidenav").style.width = "250px";
+    document.getElementById("mySidenav").classList.remove("collapsed");
+    // document.getElementById("map").style.marginLeft = "250px";
+  }
 
-    function closeNav() {
-        document.getElementById("mySidenav").style.width = "0";
-        document.getElementById("mySidenav").classList.add("collapsed");
-        // document.getElementById("map").style.marginLeft= "0";
-    }
+  //close sidenav
+  function closeNav() {
+    document.getElementById("mySidenav").style.width = "0";
+    document.getElementById("mySidenav").classList.add("collapsed");
+    // document.getElementById("map").style.marginLeft= "0";
+  }
 
+  // This allow the user to select a desired travel time in minutes,
+  // and a travel mode, and a location - and only show the listings
+  // that are within that travel time ( via the travel mode) of the location
+  function searchWithinTime() {
+    //initialise the distance matrix service
+    var distanceMatrixService = new google.maps.DistanceMatrixService;
+    var address = document.getElementById('search-within-time-text').value;
+    // check to make the place entered is not blank
+    if ( address == ''){
+      window.alert('You must enter an address');
+    } else {
+      hideListings();
+      // Use the distance matrix service to calculate the duration of the routes
+      // between all the markers, and the destination address entered
+      // by the user. Then put all the origins into an origin matrix
+      var origins = [];
+      for (var i = 0; i < markers.length; i++){
+        origins[i] = markers[i].position;
+      }
+      var destination = address;
+      var mode = document.getElementById('mode').value;
+      // Now that bot the origins and destination are defined, get all
+      // the info for the distances between them.
+      distanceMatrixService.getDistanceMatrix({
+        origins: origins,
+        destinations: [destination],
+        travelMode: google.maps.TravelMode[mode],
+        unitSystem: google.maps.UnitSystem.METRIC,
+      }, function(response,status) {
+        if (status !== google.maps.DistanceMatrixStatus.OK){
+          window.alert('Error was ' + status);
+        } else {
+          displayMarkersWithinTime(response);
+        }
+      });
+    }
+  }
+
+  // This function will go through each of the results, and,
+  // if the distance is LESS than the value in the picker, show it on the map.
+  function displayMarkersWithinTime(response) {
+   var maxDuration = document.getElementById('max-duration').value;
+   var origins = response.originAddresses;
+   var destinations = response.destinationAddresses;
+   // Parse through the results, and get the distance and duration of each.
+   // Because there might be  multiple origins and destinations we have a nested loop
+   // Then, make sure at least 1 result was found.
+   var atLeastOne = false;
+   for (var i = 0; i < origins.length; i++) {
+     var results = response.rows[i].elements;
+     for (var j = 0; j < results.length; j++) {
+       var element = results[j];
+       if (element.status === "OK") {
+         // The distance is returned in feet, but the TEXT is in miles. If we wanted to switch
+         // the function to show markers within a user-entered DISTANCE, we would need the
+         // value for distance, but for now we only need the text.
+         var distanceText = element.distance.text;
+         // Duration value is given in seconds so we make it MINUTES. We need both the value
+         // and the text.
+         var duration = element.duration.value / 60;
+         var durationText = element.duration.text;
+         if (duration <= maxDuration) {
+           //the origin [i] should = the markers[i]
+           markers[i].setMap(map);
+           atLeastOne = true;
+           // Create a mini infowindow to open immediately and contain the
+           // distance and duration
+           var infowindow = new google.maps.InfoWindow({
+             content: durationText + ' away, ' + distanceText
+           });
+           infowindow.open(map, markers[i]);
+           // Put this in so that this small window closes if the user clicks
+           // the marker, when the big infowindow opens
+           markers[i].infowindow = infowindow;
+           google.maps.event.addListener(markers[i], 'click', function() {
+             this.infowindow.close();
+           });
+         }
+       }
+     }
+   }
+   if (!atLeastOne) {
+     window.alert('We could not find any locations within that distance!');
+   }
+  }
   // google.maps.event.addDomListener(window, 'load', initMap);
-  var sidebar = $('#sidebar').sidebar();
+  //var sidebar = $('#sidebar').sidebar();
 
 
 // }())
