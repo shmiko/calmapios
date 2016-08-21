@@ -59,7 +59,19 @@ html,
       #toggle-drawing{
         width: 160px;
         position: relative;
-        margin-left: 10px;
+        margin-left: 20px;
+      }
+
+      #zoom{
+        width: 160px;
+        position: relative;
+        margin-left: 20px;
+      }
+
+      #search-within-time{
+        width: 160px;
+        position: relative;
+        margin-left: 20px;
       }
 
       #area{
@@ -73,6 +85,8 @@ html,
       }
       #zoom-to-area {
         width: 24%;
+        position: relative;
+        margin-left: 20px;
       }
 
     .sidenav {
@@ -86,6 +100,8 @@ html,
         overflow-x: hidden;
         transition: 0.5s;
         padding-top: 60px;
+        padding-left: 15px;
+        padding-right: 15px;
     }
 
     .sidenav a {
