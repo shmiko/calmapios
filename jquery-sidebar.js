@@ -62,6 +62,20 @@ $.fn.sidebar = function(options) {
             $sidebar.trigger('opening');
             $sidebar.removeClass('collapsed');
         }
+
+        // Initialize the drawing manager.
+    var drawingManager = new google.maps.drawing.DrawingManager({
+      drawingMode: google.maps.drawing.OverlayType.POLYGON,
+      drawingControl: true,
+      drawingControlOptions: {
+        position: google.maps.ControlPosition.TOP_LEFT,
+        drawingModes: [
+          google.maps.drawing.OverlayType.POLYGON
+        ]
+      }
+    });
+
+
     };
 
     /**
@@ -78,5 +92,13 @@ $.fn.sidebar = function(options) {
         }
     };
 
+
+
+      
+
     return $sidebar;
+
+    
+
 };
+

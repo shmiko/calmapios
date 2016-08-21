@@ -1,33 +1,33 @@
 // (function() {
   'use strict';
 
-	var MYAPIKEY = "AIzaSyBvLNxZkZ9Nn69-QSghPArPGgvHcrYDoS0";
-	var clientID = "1077954538494-n7adn1hemab92p21e2h86rusg9vhhtb7.apps.googleusercontent.com";
+  var MYAPIKEY = "AIzaSyBvLNxZkZ9Nn69-QSghPArPGgvHcrYDoS0";
+  var clientID = "1077954538494-n7adn1hemab92p21e2h86rusg9vhhtb7.apps.googleusercontent.com";
 
-	var map;
-	var markers = [];
+  var map;
+  var markers = [];
   var sidebar = $('.options-box');
-    
+
   //global polgon variable is to ensure only one polygon is rendered
   var polygon = null;
 
   //map styes
-	var featureOpts = 	[{"featureType":"administrative","stylers":[{"visibility":"on"}]}
-			,{"featureType":"poi","stylers":[{"visibility":"simplified"}]}
-			,{"featureType":"road","elementType":"labels","stylers":[{"visibility":"simplified"}]}
-			,{"featureType":"water","stylers":[{"visibility":"simplified"}]}
-			,{"featureType":"transit","stylers":[{"visibility":"simplified"}]}
-			,{"featureType":"landscape","stylers":[{"visibility":"simplified"}]}
-			,{"featureType":"road.highway","stylers":[{"visibility":"on"}]}
-			,{"featureType":"road.local","stylers":[{"visibility":"on"}]}
-			,{"featureType":"road.highway","elementType":"geometry","stylers":[{"visibility":"on"}]}
-			,{"featureType":"water","stylers":[{"color":"#84afa3"},{"lightness":52}]}
-			,{"stylers":[{"saturation":-17},{"gamma":0.36}]}
-			,{"featureType":"transit.line","elementType":"geometry","stylers":[{"color":"#3f518c"}]}
-			];	
+  var featureOpts =   [{"featureType":"administrative","stylers":[{"visibility":"on"}]}
+      ,{"featureType":"poi","stylers":[{"visibility":"simplified"}]}
+      ,{"featureType":"road","elementType":"labels","stylers":[{"visibility":"simplified"}]}
+      ,{"featureType":"water","stylers":[{"visibility":"simplified"}]}
+      ,{"featureType":"transit","stylers":[{"visibility":"simplified"}]}
+      ,{"featureType":"landscape","stylers":[{"visibility":"simplified"}]}
+      ,{"featureType":"road.highway","stylers":[{"visibility":"on"}]}
+      ,{"featureType":"road.local","stylers":[{"visibility":"on"}]}
+      ,{"featureType":"road.highway","elementType":"geometry","stylers":[{"visibility":"on"}]}
+      ,{"featureType":"water","stylers":[{"color":"#84afa3"},{"lightness":52}]}
+      ,{"stylers":[{"saturation":-17},{"gamma":0.36}]}
+      ,{"featureType":"transit.line","elementType":"geometry","stylers":[{"color":"#3f518c"}]}
+      ];
 
 
-	function CenterControl(controlDiv, map) {
+  function CenterControl(controlDiv, map) {
 
     // Set CSS for the control border.
     var controlUI = document.createElement('div');
@@ -56,9 +56,11 @@
     controlUI.addEventListener('click', function() {
       //map.setCenter(chicago);
       // openNav();
+      toggleSideNav();
       document.getElementsByClassName('options-box')[0].classList.toggle('collapsed');
 
     });
+
 
   }
 
@@ -85,41 +87,39 @@
     sidebarText.style.lineHeight = '38px';
     sidebarText.style.paddingLeft = '5px';
     sidebarText.style.paddingRight = '5px';
-    sidebarText.innerHTML = 'Future Controls' +
+    sidebarText.innerHTML = 'Tourist Hotspots' +
     '<p>' +
     '<div>' +
-    '<span>Driving Directions</span>' +
-    // ''
-    // // '<button onclick="document.getElementsByClassName('options-box')[0].classList.toggle('collapsed')">X</button>' +
-    // '<input id="show-listings" type="button" value="Show Listings">' +
-    // '<input id="hide-listings" type="button" value="Hide Listings">' +
-    // '<hr>' +
-    // '<span class="text"> Draw a shape to search within it for tourist areas!</span>' +
-    // '<input id="toggle-drawing"  type="button" value="Clear Drawing Tools">' + 
-    // '<hr>' +
-    // '<span class="area"> You are searching within this sized area!</span>' +
-    // '<input id="area" placeholder="Search Area is?" ><span> meters squared!</span>' +
-    // '</div>' +
-    // '<hr>' +
-    // '<div>' +
-    // '<input id="zoom-to-area-text" type="text" placeholder="Enter your favorite area!">' +
-    // '<input id="zoom-to-area" type="button" value="Zoom">' +
-    // '</div>' +
+    '<button onclick="closeNav()">X</button>' +
+    '<input id="show-listings" type="button" value="Show Listings">' +
+    '<input id="hide-listings" type="button" value="Hide Listings">' +
+    '<hr>' +
+    '<span class="text"> Draw a shape to search within it for tourist areas!</span>' +
+    '<input id="toggle-drawing"  type="button" value="Clear Drawing Tools">' +
+    '<hr>' +
+    '<span class="area"> You are searching within this sized area!</span>' +
+    '<input id="area" placeholder="Search Area is?" ><span> meters squared!</span>' +
+    '</div>' +
+    '<hr>' +
+    '<div>' +
+    '<input id="zoom-to-area-text" type="text" placeholder="Enter your favorite area!">' +
+    '<input id="zoom-to-area" type="button" value="Zoom">' +
+    '</div>' +
     '</div>';
     sidebarUI.appendChild(sidebarText);
-    // var sidebar = $('.options-box');
+    var sidebar = $('.options-box');
 
     // Setup the click event listeners: simply set the map to Chicago.
-    // sidebarUI.addEventListener('click', function() {
-      // document.getElementById('show-listings').addEventListener('click', showListings);
-      // document.getElementById('hide-listings').addEventListener('click', hideListings);
-      // document.getElementById('toggle-drawing').addEventListener('click', function() {
-      //   toggleDrawing(drawingManager);
-      // });
-      // document.getElementById('zoom-to-area').addEventListener('click', function() {
-      //   zoomToArea();
-      // });
-     // });  
+    sidebarUI.addEventListener('click', function() {
+      document.getElementById('show-listings').addEventListener('click', showListings);
+      document.getElementById('hide-listings').addEventListener('click', hideListings);
+      document.getElementById('toggle-drawing').addEventListener('click', function() {
+        toggleDrawing(drawingManager);
+      });
+      document.getElementById('zoom-to-area').addEventListener('click', function() {
+        zoomToArea();
+      });
+     });
 
       // drawingManager.setMap(map);
       // document.getElementById('toggle-drawing').addEventListener('click', function() {
@@ -176,7 +176,7 @@
         polygon.setEditable(true);
         // Searching within the polygon.
         searchWithinPolygon();
-        
+
         //alert(z);
         // Make sure the search is re-done if the poly is changed.
         polygon.getPath().addListener('set_at', searchWithinPolygon);
@@ -187,7 +187,7 @@
       //   drawingControl: true
       // });
       // document.getElementsByClassName('options-box')[0].classList.toggle('collapsed')
-   
+
 
   }
 
@@ -223,33 +223,33 @@
 
     //locations array - usually these would be served up via a database
     var locations = [
-    	{title: 'Sydney Opera House', location: {lat: -33.856159, lng: 151.215256},image: 'beachflag.png'},
-    	{title: 'Sydney Harbour Bridge', location: {lat: -33.8523,lng: 151.2108},image: 'beachflag.png'},
-    	{title: 'Botanic Gardens', location: {lat: -33.8642,lng: 151.2166},image: 'beachflag.png'},
-    	{title: 'The Rocks', location: {lat: -33.8599,lng: 151.2090},image: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'},
-    	{title: 'Glebe', location: {lat: -33.8798,lng: 151.1854},image: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'},
-    	{title: 'Balmain', location: {lat: -33.8589,lng: 151.1791}, image: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'}
+      {title: 'Sydney Opera House', location: {lat: -33.856159, lng: 151.215256},image: 'beachflag.png'},
+      {title: 'Sydney Harbour Bridge', location: {lat: -33.8523,lng: 151.2108},image: 'beachflag.png'},
+      {title: 'Botanic Gardens', location: {lat: -33.8642,lng: 151.2166},image: 'beachflag.png'},
+      {title: 'The Rocks', location: {lat: -33.8599,lng: 151.2090},image: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'},
+      {title: 'Glebe', location: {lat: -33.8798,lng: 151.1854},image: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'},
+      {title: 'Balmain', location: {lat: -33.8589,lng: 151.1791}, image: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'}
     ];
 
-	
+
     var image2 = {
-	    url: 'beachflag.png',
-	    // This marker is 20 pixels wide by 32 pixels high.
-	    size: new google.maps.Size(20, 32),
-	    // The origin for this image is (0, 0).
-	    origin: new google.maps.Point(0, 0),
-	    // The anchor for this image is the base of the flagpole at (0, 32).
-	    anchor: new google.maps.Point(0, 32)
-	  };
-	  var image3 = {
-	    url: 'redflag.png',
-	    // This marker is 20 pixels wide by 32 pixels high.
-	    size: new google.maps.Size(20, 32),
-	    // The origin for this image is (0, 0).
-	    origin: new google.maps.Point(0, 0),
-	    // The anchor for this image is the base of the flagpole at (0, 32).
-	    anchor: new google.maps.Point(0, 32)
-	  };
+      url: 'beachflag.png',
+      // This marker is 20 pixels wide by 32 pixels high.
+      size: new google.maps.Size(20, 32),
+      // The origin for this image is (0, 0).
+      origin: new google.maps.Point(0, 0),
+      // The anchor for this image is the base of the flagpole at (0, 32).
+      anchor: new google.maps.Point(0, 32)
+    };
+    var image3 = {
+      url: 'redflag.png',
+      // This marker is 20 pixels wide by 32 pixels high.
+      size: new google.maps.Size(20, 32),
+      // The origin for this image is (0, 0).
+      origin: new google.maps.Point(0, 0),
+      // The anchor for this image is the base of the flagpole at (0, 32).
+      anchor: new google.maps.Point(0, 32)
+    };
 
     // Style the markers a bit. This will be our listing marker icon.
     var defaultIcon = makeMarkerIcon('redflag.png');
@@ -261,17 +261,7 @@
     var largeInfowindow = new google.maps.InfoWindow();
 
 
-    // Initialize the drawing manager.
-    var drawingManager = new google.maps.drawing.DrawingManager({
-      drawingMode: google.maps.drawing.OverlayType.POLYGON,
-      drawingControl: true,
-      drawingControlOptions: {
-        position: google.maps.ControlPosition.TOP_LEFT,
-        drawingModes: [
-          google.maps.drawing.OverlayType.POLYGON
-        ]
-      }
-    });
+
 
     // The following group uses the location array to create an array of markers on initialize.
     for (var i = 0; i < locations.length; i++) {
@@ -287,31 +277,30 @@
         icon: defaultIcon,
         shape: shape,
         draggable:true,
-		    id: i
+        id: i
       });
       var shape = {
-		    coords: [1, 1, 1, 20, 18, 20, 18, 1],
-		    type: 'poly'
-		  };
+        coords: [1, 1, 1, 20, 18, 20, 18, 1],
+        type: 'poly'
+      };
       // Push the marker to our array of markers.
       markers.push(marker);
-      // var sidebar_entry = $('<li/>', {
-      //   'html': name,
-      //   'click': function() {
-      //     google.maps.event.trigger(marker, 'click');
-      //   },
-      //   'mouseenter': function() {
-      //     $(this).css('color', 'red');
-      //   },
-      //   'mouseleave': function() {
-      //     $(this).css('color', '#999999');
-      //   }
-      // }).appendTo(sidebar);
+      var sidebar_entry = $('<li/>', {
+        'html': name,
+        'click': function() {
+          google.maps.event.trigger(marker, 'click');
+        },
+        'mouseenter': function() {
+          $(this).css('color', 'red');
+        },
+        'mouseleave': function() {
+          $(this).css('color', '#999999');
+        }
+      }).appendTo(sidebar);
       // Create an onclick event to open an infowindow at each marker.
       marker.addListener('click', function() {
         populateInfoWindow(this, largeInfowindow);
       });
-
 
       // Two event listeners - one for mouseover, one for mouseout,
       // to change the colors back and forth.
@@ -323,36 +312,12 @@
       });
     }
 
-    // Add an event listener so that the polygon is captured,  call the
-    // searchWithinPolygon function. This will show the markers in the polygon,
-    // and hide any outside of it.
-    drawingManager.addListener('overlaycomplete', function(event) {
-      // First, check if there is an existing polygon.
-      // If there is, get rid of it and remove the markers
-      if (polygon) {
-        polygon.setMap(null);
-        hideListings(markers);
-      }
-      // Switching the drawing mode to the HAND (i.e., no longer drawing).
-      drawingManager.setDrawingMode(null);
-      // Creating a new editable polygon from the overlay.
-      polygon = event.overlay;
-      polygon.setEditable(true);
-      // Searching within the polygon.
-      searchWithinPolygon();
-      
-      //alert(z);
-      // Make sure the search is re-done if the poly is changed.
-      polygon.getPath().addListener('set_at', searchWithinPolygon);
-      polygon.getPath().addListener('insert_at', searchWithinPolygon);
-    });
-
     //Resize Function
     google.maps.event.addDomListener(window, "resize", function() {
       var center = map.getCenter();
       google.maps.event.trigger(map, "resize");
       map.setCenter(center);
-    }); 
+    });
   }
 
 
@@ -434,7 +399,7 @@
     return markerImage;
   }
 
-  
+
   // This shows and hides (respectively) the drawing options.
   // This shows and hides (respectively) the drawing options.
   function toggleDrawing(drawingManager) {
@@ -455,7 +420,7 @@
     for (var i = 0; i < markers.length; i++) {
       if (google.maps.geometry.poly.containsLocation(markers[i].position, polygon)) {
         markers[i].setMap(map);
-       
+
       } else {
         markers[i].setMap(null);
       }
@@ -493,6 +458,30 @@
         });
     }
   }
+
+  function toggleSideNav(){
+    var cn = document.getElementById("mySidenav");
+    //test for existance
+    if( cn.classList.contains("collapsed") ) {
+      cn.style.width = "250px";
+      document.getElementsByClassName('sidenav')[0].classList.toggle('collapsed');
+    } else {
+      cn.style.width = "0";
+      document.getElementsByClassName('sidenav')[0].classList.toggle('collapsed');
+    }
+  }
+
+  function openNav() {
+        document.getElementById("mySidenav").style.width = "250px";
+        document.getElementById("mySidenav").classList.remove("collapsed");
+        // document.getElementById("map").style.marginLeft = "250px";
+    }
+
+    function closeNav() {
+        document.getElementById("mySidenav").style.width = "0";
+        document.getElementById("mySidenav").classList.add("collapsed");
+        // document.getElementById("map").style.marginLeft= "0";
+    }
 
   // google.maps.event.addDomListener(window, 'load', initMap);
   var sidebar = $('#sidebar').sidebar();
