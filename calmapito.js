@@ -78,7 +78,7 @@
     sidebarUI.style.marginBottom = '22px';
     sidebarUI.style.textAlign = 'center';
     sidebarUI.title = 'Find Sydney Tourist Hotspots';
-    sidebarDiv.appendChild(sidebarUI);
+    // sidebarDiv.appendChild(sidebarUI);
 
     // Set CSS for the control interior.
     var sidebarText = document.createElement('div');
@@ -107,7 +107,7 @@
     // '<input id="zoom-to-area" type="button" value="Zoom">' +
     // '</div>' +
     // '</div>';
-    sidebarUI.appendChild(sidebarText);
+    // sidebarUI.appendChild(sidebarText);
     var sidebar = $('.options-box');
 
     // Setup the click event listeners: simply set the map to Chicago.
@@ -279,6 +279,11 @@
       google.maps.event.trigger(map, "resize");
       map.setCenter(center);
     });
+
+    
+
+
+
   }//end init
 
   // This function populates the infowindow when the marker is clicked. We'll only allow
@@ -446,6 +451,13 @@
     // document.getElementById("map").style.marginLeft= "0";
   }
 
+  //close sidenav
+  function closeRightNav() {
+    document.getElementById("mySidenavRight").style.width = "0";
+    document.getElementById("mySidenavRight").classList.add("collapsed");
+    // document.getElementById("map").style.marginLeft= "0";
+  }
+
   // This allow the user to select a desired travel time in minutes,
   // and a travel mode, and a location - and only show the listings
   // that are within that travel time ( via the travel mode) of the location
@@ -483,6 +495,7 @@
       });
     }
   }
+
 
   // This function will go through each of the results, and,
   // if the distance is LESS than the value in the picker, show it on the map.
@@ -545,6 +558,12 @@
         document.getElementById('search-within-time-text').value;
     // Get mode again from the user entered value.
     var mode = document.getElementById('mode').value;
+    // directionsService.route(request, function(result, status) {
+		// 	if (status == google.maps.DirectionsStatus.OK) {
+		// 	  directionsDisplay.setDirections(result);
+		// 	  directionsDisplay.setPanel(jQuery('#directionSteps')[0]);
+		// 	}
+		//   });
     directionsService.route({
       // The origin is the passed in marker's position.
       origin: origin,
@@ -557,14 +576,23 @@
           map: map,
           directions: response,
           draggable: true,
+          // setPanel: 'mySidenavRight',
           polylineOptions: {
             strokeColor: 'green'
           }
         });
+        directionsDisplay.setMap(map);
+        directionsDisplay.setPanel(document.getElementById('mySidenavRight'));
+        // directionsDisplay.setMap(map);
+        // directionsDisplay.setDirections(response);
+        // alert(response);
+        // directionsDisplay.setPanel(document.getElementById('mySidenavRight'));
+        // showSteps(response);
       } else {
         window.alert('Directions request failed due to ' + status);
       }
     });
+
   }
   // google.maps.event.addDomListener(window, 'load', initMap);
   //var sidebar = $('#sidebar').sidebar();
