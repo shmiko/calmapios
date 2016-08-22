@@ -310,11 +310,7 @@
       google.maps.event.trigger(map, "resize");
       map.setCenter(center);
     });
-
     
-
-
-
   }//end init
 
   // This function populates the infowindow when the marker is clicked. We'll only allow
