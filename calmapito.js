@@ -298,7 +298,6 @@
      // Searching within the polygon.
      searchWithinPolygon();
 
-     //alert(z);
      // Make sure the search is re-done if the poly is changed.
      polygon.getPath().addListener('set_at', searchWithinPolygon);
      polygon.getPath().addListener('insert_at', searchWithinPolygon);
