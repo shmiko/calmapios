@@ -291,6 +291,7 @@
        hideListings(markers);
      }
      // Switching the drawing mode to the HAND (i.e., no longer drawing).
+     
      drawingManager.setDrawingMode(null);
      // Creating a new editable polygon from the overlay.
      polygon = event.overlay;
