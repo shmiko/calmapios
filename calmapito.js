@@ -291,7 +291,7 @@
        hideListings(markers);
      }
      // Switching the drawing mode to the HAND (i.e., no longer drawing).
-     
+
      drawingManager.setDrawingMode(null);
      // Creating a new editable polygon from the overlay.
      polygon = event.overlay;
@@ -312,6 +312,8 @@
     });
     
   }//end init
+
+  
 
   // This function populates the infowindow when the marker is clicked. We'll only allow
   // one infowindow which will open at the marker that is clicked, and populate based
